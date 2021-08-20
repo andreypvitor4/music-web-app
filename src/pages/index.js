@@ -13,24 +13,18 @@ import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
 export default function Home() {
   const dispatch = useDispatch()
   const { tracks, loading, lastPage } = useSelector(state => state.playlist)
+  const fetchOptions = useSelector(state => state.fetchOptions)
 
   useEffect(() => {
-    dispatch(fetchTracks({
-      // url: 'playlist/3155776842/tracks',
-      url: 'search/track',
-      query: 'sour',
-    }))
-  }, [dispatch]);
+    dispatch(fetchTracks(fetchOptions))
+  }, [dispatch, fetchOptions]);
 
   const fetchMore = useCallback( () => {
     const currentIndex = tracks.length
     dispatch(fetchTracks({
-      // url: 'playlist/3155776842/tracks',
-      url: 'search/track',
-      offset: currentIndex,
-      max: 20,
+      ...fetchOptions,
       newPlaylist: false,
-      query: 'sour',
+      offset: currentIndex,
     }))
   }, [dispatch, tracks.length])
 
@@ -50,6 +44,12 @@ export default function Home() {
       <Header />
       <Search />
 
+      {loading && tracks.length > 0 && (
+        <LoadingScreen>
+          <ScaleLoader size={50} color={'white'}/>
+        </LoadingScreen>
+      )}
+
       <Title><h1>Mais ouvidas</h1></Title>
       <TracksList>
         {tracks.length > 0 && tracks.map( (track, key) => (
@@ -57,7 +57,7 @@ export default function Home() {
         ))}
       </TracksList>
 
-      {loading && (
+      {loading &&(
         <LoadingScreen>
           <ScaleLoader size={100} color={'white'}/>
         </LoadingScreen>

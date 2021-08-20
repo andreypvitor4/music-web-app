@@ -1,5 +1,5 @@
 const initialState = {
-  url: '',
+  url: 'playlist/3155776842/tracks',
   offset: 0,
   max: 20,
   newPlaylist: true,
