@@ -1,9 +1,17 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import store from '../store'
+import { Provider } from 'react-redux'
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(to right,black, rgb(22, 24, 31));
+  }
+
+  * {
     box-sizing: border-box;
   }
 `
@@ -19,7 +27,9 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </ThemeProvider>
     </>
   )
