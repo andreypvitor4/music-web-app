@@ -27,6 +27,10 @@ export const NavComponent = styled.nav`
   li {
     margin: 10px 10px;
     cursor: pointer;
+    a {
+      text-decoration: none;
+      color: #eee;
+    }
   }
 `
 

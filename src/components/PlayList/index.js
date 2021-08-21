@@ -4,15 +4,16 @@ import { GiPauseButton } from 'react-icons/gi'
 import { AudioPlayer, PlayPause, Time, ProgressBar, DesktopTime} from './styles'
 import { useSelector } from 'react-redux';
 
-export default function PlayList({songDuration, data, fullLayoutDisplay }) {
+export default function PlayList({songDuration, data, fullLayoutDisplay, index }) {
+
   const active = useSelector(state => state.fullSongLayout)
+  const { tracksSound } = useSelector(state => state.playlist)
 
   const [isPlaying, setIsPlaying] = useState(active);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [progressBarSeekBeforeWidth, setProgressBarSeekBeforeWidth] = useState(0);
 
-  const audioPlayerRef = useRef()
   const progressBarRef = useRef()
   const animationRef = useRef()
 
@@ -22,30 +23,46 @@ export default function PlayList({songDuration, data, fullLayoutDisplay }) {
 
     progressBarRef.current.max = seconds
     progressBarRef.current.value = 0
+
+    function pauseActiveListener() {
+      setIsPlaying(prev => {
+        if(prev) return !prev
+        if(!prev) return prev
+      })
+    }
+
+    tracksSound[index].addEventListener('pause', pauseActiveListener)
+
+    return () => {
+      tracksSound[index].removeEventListener('pause', pauseActiveListener)
+    }
     
   }, [songDuration]);
 
   function togglePlayPause() {
     const prevValue = isPlaying
     setIsPlaying(!prevValue)
+
     if(!prevValue) {
-      audioPlayerRef.current.play()
+      tracksSound.forEach(elem => elem.pause())
+      tracksSound[index].play()
+      
       animationRef.current = requestAnimationFrame(whilePlaying)
     }else {
-      audioPlayerRef.current.pause()
+      tracksSound[index].pause()
       cancelAnimationFrame(animationRef.current)
     }
   }
 
   function whilePlaying() {
-    progressBarRef.current.value = audioPlayerRef.current.currentTime
+    progressBarRef.current.value = tracksSound[index].currentTime
     setProgressBarSeekBeforeWidth((progressBarRef.current.value/duration)*100)
     setCurrentTime(progressBarRef.current.value)
     animationRef.current = requestAnimationFrame(whilePlaying)
   }
 
   function handleChangeRange() {
-    audioPlayerRef.current.currentTime = progressBarRef.current.value
+    tracksSound[index].currentTime = progressBarRef.current.value
     setProgressBarSeekBeforeWidth( (progressBarRef.current.value/duration)*100 )
     setCurrentTime(progressBarRef.current.value)
   }
@@ -61,7 +78,6 @@ export default function PlayList({songDuration, data, fullLayoutDisplay }) {
     <div style={{width: '100%'}}>
 
       <AudioPlayer fullLayoutDisplay={fullLayoutDisplay}>
-        <audio preload="metadata" ref={audioPlayerRef} src={data.preview}></audio>
 
         <PlayPause onClick={togglePlayPause} fullLayoutDisplay={fullLayoutDisplay}>
           {isPlaying ? <GiPauseButton /> : <FaPlay />}

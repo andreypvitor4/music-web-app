@@ -1,11 +1,18 @@
 import { useState } from "react";
-import PlayList from "../PlayList/"
-import { CoverContainer, SongContainer, SongInfo, DeezerLink } from './styles'
+import { useDispatch } from 'react-redux';
+import { saveTrack, deleteTrack } from "../../store/mySongs/mySongs.actions";
 import { SiDeezer } from 'react-icons/si'
+import { RiHeartFill, RiHeartAddLine } from 'react-icons/ri'
+import PlayList from "../PlayList/"
+import { CoverContainer, SongContainer, SongInfo, DeezerLink, AddToList, AddToList2, HeartFill, HeartLine} from './styles'
 
-export default function SongDisplay( { data }) {
+export default function SongDisplay( { data, index }) {
+
   const [fullLayoutDisplay, setFullLayoutDisplay] = useState(false);
+  const [addToMyList, setAddToMyList] = useState(false);
   const [hideTitle, setHideTitle] = useState('');
+
+  const dispatch = useDispatch()
 
   function calculateTime(secs) {
     const minutes = Math.floor(secs / 60)
@@ -16,35 +23,63 @@ export default function SongDisplay( { data }) {
   function handleLayoutDisplay() {
     setFullLayoutDisplay(prev => !prev)
   }
-  return (
 
+  function handleAddToMyList(e) {
+    setAddToMyList(prev => !prev)
+
+    if(!addToMyList) {
+      dispatch(saveTrack(data))
+    }else {
+      dispatch(deleteTrack(data.id))
+    }
+
+    const heartFill = e.currentTarget.firstChild
+
+    heartFill.style.transform = 'scale(1.5)'
+    setTimeout(() => {
+      heartFill.style.transform = 'scale(1)'
+    }, 200)
+  }
+
+  return (
       <>
         {data.album && (
           <SongContainer 
             fullLayoutDisplay={fullLayoutDisplay} 
             onMouseEnter={() => {setHideTitle('0')}}
-            onMouseLeave={() => {setHideTitle('50%')}}
+            onMouseLeave={() => {setHideTitle('70%')}}
           >
             <CoverContainer>
               {(!fullLayoutDisplay) && <h2 style={{opacity: hideTitle}}>{ data.title_short }</h2>}
               <img src={data?.album.cover_big || ''} alt="album" onClick={handleLayoutDisplay}/>
+
+              <AddToList onClick={handleAddToMyList} fullLayoutDisplay={fullLayoutDisplay} >
+                <HeartFill addToMyList={addToMyList}> <RiHeartFill/> </HeartFill>
+                <HeartLine addToMyList={addToMyList}> <RiHeartAddLine/> </HeartLine>
+              </AddToList>
+
+              <AddToList2 onClick={handleAddToMyList} fullLayoutDisplay={fullLayoutDisplay} >
+                <HeartFill addToMyList={addToMyList}> <RiHeartFill/> </HeartFill>
+                <HeartLine addToMyList={addToMyList}> <RiHeartAddLine/> </HeartLine>
+              </AddToList2>
+
               <span>
-                <PlayList data={data} fullLayoutDisplay={fullLayoutDisplay}/>
+                <PlayList data={data} fullLayoutDisplay={fullLayoutDisplay} index={index}/>
               </span>
             </CoverContainer>
           
             <SongInfo fullLayoutDisplay={fullLayoutDisplay}>
               <h2>{ data.title_short }</h2>
 
-              <a href={data.artist.link} style={{marginLeft: '10px', textDecoration: 'none'}}> 
+              <a href={data.artist.link} style={{textDecoration: 'none'}}>
                 <span style={{color: '#999'}}>Artista:</span> <span style={{color: 'white', fontWeight: 'bold'}}>{ data.artist.name }</span>
               </a>
 
-              <div style={{marginLeft: '10px'}}>
+              <div>
                 <span style={{color: '#999'}}>Album:</span> { data.album.title } 
               </div>
 
-              <div style={{marginLeft: '10px'}}>
+              <div>
                 <span style={{color: '#999'}}>Duração:</span> { calculateTime(data.duration) }
               </div>
 

@@ -4,6 +4,7 @@ const initialState = {
   max: 20,
   newPlaylist: true,
   query: '',
+  option: '',
 }
 
 export default function fetchOptionsReducer(state = initialState, action) {
@@ -12,12 +13,14 @@ export default function fetchOptionsReducer(state = initialState, action) {
       return {
         ...state,
         url: 'playlist/3155776842/tracks',
+        option: 'trend'
       }
     case 'SEARCH':
       return {
         ...state,
         url: 'search/track',
         query: action.payload,
+        option: 'search'
       }
     default:
       return state
