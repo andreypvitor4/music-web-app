@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { saveTrack, deleteTrack } from "../../store/mySongs/mySongs.actions";
 import { SiDeezer } from 'react-icons/si'
@@ -11,6 +11,19 @@ export default function SongDisplay( { data, index }) {
   const [fullLayoutDisplay, setFullLayoutDisplay] = useState(false);
   const [addToMyList, setAddToMyList] = useState(false);
   const [hideTitle, setHideTitle] = useState('');
+
+  useEffect(() => {
+    const trackList = localStorage.getItem('AV--myTracks')
+
+    if(trackList) {
+      const parsedtrackList = JSON.parse(trackList)
+  
+      //se a musica atual estiver na minha lista currentTrackIsInMyList recebe true
+      const currentTrackIsInMyList = parsedtrackList.some( elem => elem.id === data.id )
+      setAddToMyList(currentTrackIsInMyList)
+    }
+
+  }, [data.id]);
 
   const dispatch = useDispatch()
 
@@ -30,7 +43,7 @@ export default function SongDisplay( { data, index }) {
     if(!addToMyList) {
       dispatch(saveTrack(data))
     }else {
-      dispatch(deleteTrack(data.id))
+      dispatch(deleteTrack(data))
     }
 
     const heartFill = e.currentTarget.firstChild

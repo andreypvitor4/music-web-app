@@ -1,19 +1,23 @@
+import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react'
 import { NavComponent, Container, BorderBottom } from "./styles"
-import { homePageClicked } from '../../store/HomePageToggle/HomePageToggle.actions';
 
 export default function Header() {
+  const router = useRouter()
   const [borderRight, setBorderRight] = useState(207);
   const [borderWidth, setBorderWidth] = useState(46);
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if(router.pathname) {
+      setBorderRight(80)
+      setBorderWidth(115)
+    }
+  }, []);
 
   function handleHome() {
     setBorderRight(207);
     setBorderWidth(46)
-    dispatch(homePageClicked())
   }
 
   function handleMySongs() {
@@ -32,7 +36,7 @@ export default function Header() {
               </Link> 
             </li>
             <li onClick={handleMySongs}> 
-              <Link href="/mySongs"> 
+              <Link href="/my-songs"> 
                 Minhas músicas
               </Link> 
             </li>

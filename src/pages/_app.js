@@ -1,7 +1,7 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import LayOut from '../components/LayOut'
-import { store } from '../store'
 import { Provider } from 'react-redux'
+import { store } from '../store'
 
 const GlobalStyle = createGlobalStyle`
   body {

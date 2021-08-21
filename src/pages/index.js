@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import ScaleLoader from "react-spinners/ScaleLoader"
 import { IoIosArrowUp } from 'react-icons/io'
@@ -14,10 +14,9 @@ export default function Home() {
   const dispatch = useDispatch()
   const { tracks, loading, lastPage } = useSelector(state => state.playlist)
   const fetchOptions = useSelector(state => state.fetchOptions)
-  const homeClicked = useSelector(state => state.homePageToggle)
 
   useEffect(() => {
-    !homeClicked && dispatch(fetchTracks(fetchOptions))
+    dispatch(fetchTracks(fetchOptions))
   }, [dispatch, fetchOptions]);
 
   useEffect(() => {

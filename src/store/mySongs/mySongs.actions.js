@@ -11,3 +11,9 @@ export function deleteTrack(id) {
     payload: id,
   }
 }
+
+export function getSavedTracks() {
+  return {
+    type: 'GET_SAVED_TRACKS'
+  }
+}
