@@ -8,6 +8,7 @@ import TrackDisplay from "../components/TrackDisplay";
 import Search from "../components/Search";
 import InfiniteScroll from "../components/InfiniteScroll";
 import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
+import { updateTracksAudios } from '../store/tracksAudios/tracksAudios.actions';
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -18,6 +19,10 @@ export default function Home() {
   useEffect(() => {
     !homeClicked && dispatch(fetchTracks(fetchOptions))
   }, [dispatch, fetchOptions]);
+
+  useEffect(() => {
+    dispatch(updateTracksAudios(tracks))
+  }, [tracks]);
 
   const fetchMore = useCallback( () => {
     const currentIndex = tracks.length

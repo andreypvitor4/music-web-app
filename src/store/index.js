@@ -6,6 +6,7 @@ import playlistReducer from './playlist/playlist.reducer'
 import fetchOptionsReducer from './fetchOptions/fetchOptions.reducer'
 import mySongsReducer from './mySongs/mySongs.reduces'
 import homePageToggleReducer from './HomePageToggle/HomePageToggle.reducer'
+import tracksAudiosReducer from './tracksAudios/tracksAudios.reduces'
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   fetchOptions: fetchOptionsReducer,
   mySongs: mySongsReducer,
   homePageToggle: homePageToggleReducer,
+  tracksAudios: tracksAudiosReducer,
 })
 
 // const persistedReducer = persistReducer({

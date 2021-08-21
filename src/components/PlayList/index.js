@@ -4,10 +4,10 @@ import { GiPauseButton } from 'react-icons/gi'
 import { AudioPlayer, PlayPause, Time, ProgressBar, DesktopTime} from './styles'
 import { useSelector } from 'react-redux';
 
-export default function PlayList({songDuration, data, fullLayoutDisplay, index }) {
+export default function PlayList({ songDuration, data, fullLayoutDisplay, index }) {
 
   const active = useSelector(state => state.fullSongLayout)
-  const { tracksSound } = useSelector(state => state.playlist)
+  const tracksSound = useSelector(state => state.tracksAudios)
 
   const [isPlaying, setIsPlaying] = useState(active);
   const [duration, setDuration] = useState(0);
@@ -19,7 +19,7 @@ export default function PlayList({songDuration, data, fullLayoutDisplay, index }
 
   useEffect(() => {
     const seconds = songDuration || 30
-    setDuration(seconds);
+    setDuration(seconds)
 
     progressBarRef.current.max = seconds
     progressBarRef.current.value = 0
@@ -31,13 +31,13 @@ export default function PlayList({songDuration, data, fullLayoutDisplay, index }
       })
     }
 
-    tracksSound[index].addEventListener('pause', pauseActiveListener)
+    tracksSound[index] && tracksSound[index].addEventListener('pause', pauseActiveListener)
 
     return () => {
-      tracksSound[index].removeEventListener('pause', pauseActiveListener)
+      tracksSound[index] && tracksSound[index].removeEventListener('pause', pauseActiveListener)
     }
     
-  }, [songDuration]);
+  }, [songDuration, tracksSound[index]]);
 
   function togglePlayPause() {
     const prevValue = isPlaying
@@ -45,11 +45,11 @@ export default function PlayList({songDuration, data, fullLayoutDisplay, index }
 
     if(!prevValue) {
       tracksSound.forEach(elem => elem.pause())
-      tracksSound[index].play()
+      tracksSound[index] && tracksSound[index].play()
       
       animationRef.current = requestAnimationFrame(whilePlaying)
     }else {
-      tracksSound[index].pause()
+      tracksSound[index] && tracksSound[index].pause()
       cancelAnimationFrame(animationRef.current)
     }
   }
@@ -62,7 +62,7 @@ export default function PlayList({songDuration, data, fullLayoutDisplay, index }
   }
 
   function handleChangeRange() {
-    tracksSound[index].currentTime = progressBarRef.current.value
+    if(tracksSound[index]) tracksSound[index].currentTime = progressBarRef.current.value
     setProgressBarSeekBeforeWidth( (progressBarRef.current.value/duration)*100 )
     setCurrentTime(progressBarRef.current.value)
   }

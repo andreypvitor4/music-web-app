@@ -26,8 +26,16 @@ export default function Header() {
       <Container>
         <NavComponent>
           <ul>
-            <li onClick={handleHome}> <Link href="/">Home</Link> </li>
-            <li onClick={handleMySongs}> <Link href="/mySongs">Minhas músicas</Link> </li>
+            <li onClick={handleHome}> 
+              <Link href="/">
+                Home
+              </Link> 
+            </li>
+            <li onClick={handleMySongs}> 
+              <Link href="/mySongs"> 
+                Minhas músicas
+              </Link> 
+            </li>
           </ul>
         </NavComponent>
 
