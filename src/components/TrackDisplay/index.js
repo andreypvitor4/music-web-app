@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { saveTrack, deleteTrack } from "../../store/mySongs/mySongs.actions";
+import { addTrackToAdd, addTrackToDelete } from "../../store/mySongs/mySongs.actions";
 import { SiDeezer } from 'react-icons/si'
 import { RiHeartFill, RiHeartAddLine } from 'react-icons/ri'
 import TrackPlayer from "../TrackPlayer"
@@ -12,13 +12,15 @@ export default function SongDisplay( { data, index }) {
   const [addToMyList, setAddToMyList] = useState(false);
   const [hideTitle, setHideTitle] = useState('');
 
-  const mySavedSongs = useSelector(state => state.mySongs)
+  const { myTracks } = useSelector(state => state.mySongs)
 
   useEffect(() => {
-      //se a musica atual estiver na minha lista currentTrackIsInMyList recebe true
-      const currentTrackIsInMyList = mySavedSongs.some( elem => elem.id === data.id )
-      setAddToMyList(currentTrackIsInMyList)
-  }, []);
+      if(myTracks) {
+        //se a musica atual estiver na minha lista currentTrackIsInMyList recebe true
+        const currentTrackIsInMyList = myTracks.some( elem => elem.id === data.id )
+        setAddToMyList(currentTrackIsInMyList)
+      }
+  }, [myTracks]);
 
   const dispatch = useDispatch()
 
@@ -36,9 +38,9 @@ export default function SongDisplay( { data, index }) {
     setAddToMyList(prev => !prev)
 
     if(!addToMyList) {
-      dispatch(saveTrack(data))
+      dispatch(addTrackToAdd(data))
     }else {
-      dispatch(deleteTrack(data))
+      dispatch(addTrackToDelete(data))
     }
 
     const heartFill = e.currentTarget.firstChild

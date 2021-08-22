@@ -1,67 +1,80 @@
-export default function mySongsReducer(state = [], action) {
+const initialState = {
+  myTracks: [],
+  tracksToAdd: [],
+  tracksToDelete: [],
+}
+
+export default function mySongsReducer(state = initialState, action) {
   switch(action.type) {
-    case 'SAVE_TRACK':
-      addToTrackIdList(action.payload)
-      return [
-        ...state,
-        action.payload,
-      ]
+    case 'ADD_TRACK_TO_ADD':
+      const trackIsAlreadyInMyList = state.myTracks.some(elem => elem.id === action.payload.id)
+      return {
+        myTracks: state.myTracks,
+        tracksToDelete: state.tracksToDelete.filter(elem => elem.id !== action.payload.id),
+        tracksToAdd: trackIsAlreadyInMyList? state.tracksToAdd : [...state.tracksToAdd, action.payload],
+      }
 
-    case 'DELETE_TRACK':
-      RemoveOfTrackIdList(action.payload.id)
-      return state.filter( elem => (elem.id !== action.payload.id) )
+    case 'ADD_TRACK_TO_DELETE':
+      return {
+        myTracks: state.myTracks,
+        tracksToAdd: state.tracksToAdd.filter(elem => elem.id !== action.payload.id),
+        tracksToDelete: [...state.tracksToDelete, action.payload],
+      }
 
-    case 'GET_SAVED_TRACKS':
-      return state.length > 0? state: getMyTracks()
+    case 'ADD_TRACKS_TO_MY_LIST':
+      addToMyTrackList(state.tracksToAdd)
+      return {
+        tracksToDelete: state.tracksToDelete,
+        myTracks: [...state.myTracks, ...state.tracksToAdd],
+        tracksToAdd: [],
+      }
+
+    case 'DELETE_TRACKS_OF_MY_LIST':
+      RemoveOfMyTrackList(state.tracksToDelete)
+      return {
+        tracksToAdd: state.tracksToAdd,
+        myTracks: state.myTracks.filter( elem => !(state.tracksToDelete.some(track => track.id === elem.id)) ),
+        tracksToDelete: [],
+      }
+
+    case 'GET_LOCAL_STORAGE_SAVED_TRACKS':
+      return state.length > 0? state : getMyTracksList()
 
     default:
       return state
   }
 }
 
-function getMyTracks() {
+function getMyTracksList() {
   const myTracks = localStorage.getItem('AV--myTracks')
 
-  if (myTracks) return JSON.parse(myTracks)
-
-  return []
-}
-
-function addToTrackIdList(track) {
-  const myTracks = localStorage.getItem('AV--myTracks')
-
-  const myTracksData = {
-    id: track.id,
-    duratiom: track.duration,
-    title_short: track.title,
-    preview: track.preview,
-    link: track.link,
-    album: {
-      cover_big: track.album.cover_big,
-      title: track.album.title,
-    },
-    artist: {
-      name: track.artist.name
-    },
+  if(myTracks) return {
+    myTracks: JSON.parse(myTracks),
+    tracksToAdd: [],
+    tracksToDelete: [],
   }
 
-  if(myTracks) {
-    const myParsedTracks = JSON.parse(myTracks)
-    myParsedTracks.push(myTracksData)
-
-    localStorage.setItem('AV--myTracks', JSON.stringify(myParsedTracks))
-  }else {
-    localStorage.setItem('AV--myTracks', JSON.stringify([myTracksData]))
+  return {
+    myTracks: [],
+    tracksToAdd: [],
+    tracksToDelete: [],
   }
 }
 
-function RemoveOfTrackIdList(id) {
+function addToMyTrackList(tracksToAdd) {
   const myTracks = localStorage.getItem('AV--myTracks')
 
-  if(myTracks) {
-    const myParsedTracks = JSON.parse(myTracks)
-    const newTracks = myParsedTracks.filter( elem => elem.id != id )
+  const myParsedTracks = myTracks? JSON.parse(myTracks) : []
+  const myNewTracks = [...myParsedTracks, ...tracksToAdd]
 
-    localStorage.setItem('AV--myTracks', JSON.stringify(newTracks))
-  }
+  localStorage.setItem('AV--myTracks', JSON.stringify(myNewTracks))
+}
+
+function RemoveOfMyTrackList(tracksToDelete) {
+  const myTracks = localStorage.getItem('AV--myTracks')
+
+  const myParsedTracks = myTracks? JSON.parse(myTracks) : []
+  const myNewTracks = myParsedTracks.filter( elem => !(tracksToDelete.some(track => track.id === elem.id)) )
+
+  localStorage.setItem('AV--myTracks', JSON.stringify(myNewTracks))
 }

@@ -8,7 +8,7 @@ import {
   fetchTracksCount,
 } from './playlist.actions'
 
-export default function fetchTracks({url, query, offset = 0, max = 20, newPlaylist = true}) {
+export default function fetchTracks({url, query, offset = 0, max = 8, newPlaylist = true}) {
   
   return async function(dispatch, getState) {
     const { playlist } = getState()

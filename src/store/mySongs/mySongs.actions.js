@@ -1,19 +1,31 @@
-export function saveTrack(track) {
+export function addTrackToAdd(track) {
   return {
-    type: 'SAVE_TRACK',
+    type: 'ADD_TRACK_TO_ADD',
     payload: track,
   }
 }
 
-export function deleteTrack(id) {
+export function addTrackToDelete(track) {
   return {
-    type: 'DELETE_TRACK',
-    payload: id,
+    type: 'ADD_TRACK_TO_DELETE',
+    payload: track,
   }
 }
 
-export function getzSavedTracks() {
+export function addTracksToMyList() {
   return {
-    type: 'GET_SAVED_TRACKS'
+    type: 'ADD_TRACKS_TO_MY_LIST',
+  }
+}
+
+export function deleteTracksOfMyList() {
+  return {
+    type: 'DELETE_TRACKS_OF_MY_LIST',
+  }
+}
+
+export function getLocalStorageSavedTracks() {
+  return {
+    type: 'GET_LOCAL_STORAGE_SAVED_TRACKS'
   }
 }

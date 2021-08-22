@@ -9,6 +9,7 @@ import Search from "../components/Search";
 import InfiniteScroll from "../components/InfiniteScroll";
 import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
 import { updateTracksAudios } from '../store/tracksAudios/tracksAudios.actions';
+import { addTracksToMyList, deleteTracksOfMyList } from '../store/mySongs/mySongs.actions';
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -22,6 +23,13 @@ export default function Home() {
   useEffect(() => {
     dispatch(updateTracksAudios(tracks))
   }, [tracks]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(addTracksToMyList())
+      dispatch(deleteTracksOfMyList())
+    }
+  }, []);
 
   const fetchMore = useCallback( () => {
     const currentIndex = tracks.length

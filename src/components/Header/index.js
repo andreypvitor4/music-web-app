@@ -1,12 +1,20 @@
 import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link'
+import Router from 'next/router';
 import { useEffect, useState } from 'react'
 import { NavComponent, Container, BorderBottom } from "./styles"
+import { getLocalStorageSavedTracks } from '../../store/mySongs/mySongs.actions';
+import { useDispatch } from 'react-redux';
 
 export default function Header() {
   const router = useRouter()
   const [borderRight, setBorderRight] = useState(207);
   const [borderWidth, setBorderWidth] = useState(46);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    // dispatch(getLocalStorageSavedTracks())
+  }, []);
 
   useEffect(() => {
     if(router.pathname === '/my-songs') {
@@ -22,11 +30,13 @@ export default function Header() {
   function handleHome() {
     setBorderRight(207)
     setBorderWidth(46)
+    Router.push('/')
   }
 
   function handleMySongs() {
     setBorderRight(80)
     setBorderWidth(115)
+    Router.push('/my-songs')
   }
 
   return (
@@ -35,14 +45,10 @@ export default function Header() {
         <NavComponent>
           <ul>
             <li onClick={handleHome}> 
-              <Link href="/">
-                Home
-              </Link> 
+              Home
             </li>
             <li onClick={handleMySongs}> 
-              <Link href="/my-songs"> 
-                Minhas músicas
-              </Link> 
+              Minhas músicas
             </li>
           </ul>
         </NavComponent>
