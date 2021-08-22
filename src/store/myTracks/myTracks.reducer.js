@@ -8,21 +8,25 @@ export default function myTracksReducer(state = initialState, action) {
   switch(action.type) {
     case 'ADD_TRACK_TO_ADD_LIST':
       const trackIsAlreadyInMyList = state.myTracks.some(elem => elem.id === action.payload.id)
-      return {
+      const newAddState = {
         myTracks: state.myTracks,
         tracksToDelete: state.tracksToDelete.filter(elem => elem.id !== action.payload.id),
         tracksToAdd: trackIsAlreadyInMyList? state.tracksToAdd : [...state.tracksToAdd, action.payload],
       }
+      saveAddAndDeleteState(newAddState)
+      return newAddState
 
     case 'ADD_TRACK_TO_DELETE_LIST':
-      return {
+      const newDeleteState = {
         myTracks: state.myTracks,
         tracksToAdd: state.tracksToAdd.filter(elem => elem.id !== action.payload.id),
         tracksToDelete: [...state.tracksToDelete, action.payload],
       }
+      saveAddAndDeleteState(newDeleteState)
+      return newDeleteState
 
     case 'ADD_TRACKS_TO_MY_LIST':
-      addToMyTrackList(state.tracksToAdd)
+      addToMyTrackListStorage(state.tracksToAdd)
       return {
         tracksToDelete: state.tracksToDelete,
         myTracks: [...state.myTracks, ...state.tracksToAdd],
@@ -30,7 +34,7 @@ export default function myTracksReducer(state = initialState, action) {
       }
 
     case 'DELETE_TRACKS_OF_MY_LIST':
-      RemoveOfMyTrackList(state.tracksToDelete)
+      RemoveOfMyTrackListStorage(state.tracksToDelete)
       return {
         tracksToAdd: state.tracksToAdd,
         myTracks: state.myTracks.filter( elem => !(state.tracksToDelete.some(track => track.id === elem.id)) ),
@@ -38,7 +42,16 @@ export default function myTracksReducer(state = initialState, action) {
       }
 
     case 'GET_LOCAL_STORAGE_SAVED_TRACKS':
-      return state.length > 0? state : getMyTracksListFromStorage()
+      const savedAddAndDeleteState = getStorageSavedAddAndDeleteState()
+      const savedTracksState = getMyTracksListFromStorage()
+      const myNewTracksAdded = [...savedTracksState, ...savedAddAndDeleteState.tracksToAdd]
+      const myNewTracks = myNewTracksAdded.filter( elem => !(savedAddAndDeleteState.tracksToDelete.some(track => track.id === elem.id)) )
+      refreshLocalStorageTracks(myNewTracks)
+      return {
+        myTracks: myNewTracks,
+        tracksToAdd: [],
+        tracksToDelete: [],
+      }
 
     default:
       return state
@@ -48,20 +61,12 @@ export default function myTracksReducer(state = initialState, action) {
 function getMyTracksListFromStorage() {
   const myTracks = localStorage.getItem('AV--myTracks')
 
-  if(myTracks) return {
-    myTracks: JSON.parse(myTracks),
-    tracksToAdd: [],
-    tracksToDelete: [],
-  }
+  if(myTracks) return JSON.parse(myTracks)
 
-  return {
-    myTracks: [],
-    tracksToAdd: [],
-    tracksToDelete: [],
-  }
+  return []
 }
 
-function addToMyTrackList(tracksToAdd) {
+function addToMyTrackListStorage(tracksToAdd) {
   const myTracks = localStorage.getItem('AV--myTracks')
 
   const myParsedTracks = myTracks? JSON.parse(myTracks) : []
@@ -70,11 +75,34 @@ function addToMyTrackList(tracksToAdd) {
   localStorage.setItem('AV--myTracks', JSON.stringify(myNewTracks))
 }
 
-function RemoveOfMyTrackList(tracksToDelete) {
+function RemoveOfMyTrackListStorage(tracksToDelete) {
   const myTracks = localStorage.getItem('AV--myTracks')
 
   const myParsedTracks = myTracks? JSON.parse(myTracks) : []
   const myNewTracks = myParsedTracks.filter( elem => !(tracksToDelete.some(track => track.id === elem.id)) )
 
+  localStorage.setItem('AV--myTracks', JSON.stringify(myNewTracks))
+}
+
+function saveAddAndDeleteState(newState) {
+  const newStateStorage = {
+    tracksToAdd: newState.tracksToAdd,
+    tracksToDelete: newState.tracksToDelete,
+  }
+
+  localStorage.setItem('AV--myState', JSON.stringify(newStateStorage))
+}
+
+function getStorageSavedAddAndDeleteState() {
+  const savedState = localStorage.getItem('AV--myState')
+  const parsedSavedState = savedState? JSON.parse(savedState) : {
+    tracksToAdd: [],
+    tracksToDelete: [],
+  }
+
+  return parsedSavedState
+}
+
+function refreshLocalStorageTracks(myNewTracks) {
   localStorage.setItem('AV--myTracks', JSON.stringify(myNewTracks))
 }

@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import Router from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react'
-import { getLocalStorageSavedTracks } from '../../store/myTracks/myTracks.actions';
+import { getLocalStorageSavedTracks, refreshLocalStorageState } from '../../store/myTracks/myTracks.actions';
 import { NavComponent, Container, BorderBottom } from "./styles"
 
 export default function Header() {
@@ -16,6 +16,7 @@ export default function Header() {
 
   useEffect(() => {
     dispatch(getLocalStorageSavedTracks())
+    // dispatch(refreshLocalStorageState())
   }, []);
 
   useEffect(() => {

@@ -24,8 +24,24 @@ export function deleteTracksOfMyList() {
   }
 }
 
+export function addMyTrackStateOnStorage(track, option) {
+  return {
+    type: 'ADD_MY_TRACK_STATE_ON_STORAGE',
+    payload: {
+      track,
+      option,
+    }
+  }
+}
+
 export function getLocalStorageSavedTracks() {
   return {
     type: 'GET_LOCAL_STORAGE_SAVED_TRACKS'
+  }
+}
+
+export function refreshLocalStorageState() {
+  return {
+    type: 'REFRESH_LOCAL_STORAGE_STATE',
   }
 }

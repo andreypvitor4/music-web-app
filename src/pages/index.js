@@ -26,8 +26,6 @@ export default function Home() {
 
   useEffect(() => {
     // Atualiza a lista de favoritos com as ações feitas na página
-    dispatch(addTracksToMyList())
-    dispatch(deleteTracksOfMyList())
     return () => {
       dispatch(addTracksToMyList())
       dispatch(deleteTracksOfMyList())
