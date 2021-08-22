@@ -38,14 +38,14 @@ export default function mySongsReducer(state = initialState, action) {
       }
 
     case 'GET_LOCAL_STORAGE_SAVED_TRACKS':
-      return state.length > 0? state : getMyTracksList()
+      return state.length > 0? state : getMyTracksListFromStorage()
 
     default:
       return state
   }
 }
 
-function getMyTracksList() {
+function getMyTracksListFromStorage() {
   const myTracks = localStorage.getItem('AV--myTracks')
 
   if(myTracks) return {

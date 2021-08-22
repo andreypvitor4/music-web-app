@@ -13,7 +13,7 @@ export default function Header() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // dispatch(getLocalStorageSavedTracks())
+    dispatch(getLocalStorageSavedTracks())
   }, []);
 
   useEffect(() => {

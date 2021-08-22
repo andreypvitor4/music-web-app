@@ -6,7 +6,7 @@ import { RiHeartFill, RiHeartAddLine } from 'react-icons/ri'
 import TrackPlayer from "../TrackPlayer"
 import { CoverContainer, SongContainer, SongInfo, DeezerLink, AddToList, AddToList2, HeartFill, HeartLine} from './styles'
 
-export default function SongDisplay( { data, index }) {
+export default function TrackDisplay( { data, index }) {
 
   const [fullLayoutDisplay, setFullLayoutDisplay] = useState(false);
   const [addToMyList, setAddToMyList] = useState(false);
@@ -20,7 +20,7 @@ export default function SongDisplay( { data, index }) {
         const currentTrackIsInMyList = myTracks.some( elem => elem.id === data.id )
         setAddToMyList(currentTrackIsInMyList)
       }
-  }, [myTracks]);
+  }, [myTracks, data]);
 
   const dispatch = useDispatch()
 

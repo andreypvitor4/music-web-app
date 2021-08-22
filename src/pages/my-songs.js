@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TracksList } from "../pagesStyles/home"
 import TrackDisplay from '../components/TrackDisplay'
 import { updateTracksAudios } from "../store/tracksAudios/tracksAudios.actions";
-import { getLocalStorageSavedTracks } from "../store/mySongs/mySongs.actions";
 import { addTracksToMyList, deleteTracksOfMyList } from '../store/mySongs/mySongs.actions';
 import { AddButtonDiv } from "../pagesStyles/mySongs";
 
@@ -13,7 +12,6 @@ export default function MySongs() {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(getLocalStorageSavedTracks())
     return () => {
       dispatch(addTracksToMyList())
       dispatch(deleteTracksOfMyList())
