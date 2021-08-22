@@ -44,8 +44,13 @@ export default function myTracksReducer(state = initialState, action) {
     case 'GET_LOCAL_STORAGE_SAVED_TRACKS':
       const savedAddAndDeleteState = getStorageSavedAddAndDeleteState()
       const savedTracksState = getMyTracksListFromStorage()
-      const myNewTracksAdded = [...savedTracksState, ...savedAddAndDeleteState.tracksToAdd]
-      const myNewTracks = myNewTracksAdded.filter( elem => !(savedAddAndDeleteState.tracksToDelete.some(track => track.id === elem.id)) )
+      const filteredTracksToAdd = savedAddAndDeleteState.tracksToAdd.filter(elem => (
+        !savedTracksState.some(track => track.id === elem.id)
+      ))
+      const myNewTracksAdded = [...savedTracksState, ...filteredTracksToAdd]
+      const myNewTracks = myNewTracksAdded.filter( (elem, i) => (
+        !(savedAddAndDeleteState.tracksToDelete.some(track => track.id === elem.id)) )
+      )
       refreshLocalStorageTracks(myNewTracks)
       return {
         myTracks: myNewTracks,

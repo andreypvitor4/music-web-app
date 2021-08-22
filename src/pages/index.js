@@ -40,7 +40,7 @@ export default function Home() {
       newPlaylist: false,
       offset: currentIndex,
     }))
-  }, [dispatch, tracks.length])
+  }, [dispatch, tracks.length, fetchOptions])
 
   function goToTopSmooth() {
     window.scrollTo({
