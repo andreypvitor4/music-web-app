@@ -19,14 +19,12 @@ export default function playlistReducer(state = initialState, action) {
         ...state,
         loading: false,
         tracks: action.payload,
-        tracksSound: action.payload.map( elem => (new Audio(`${elem.preview}`)))
       }
     case 'FETCH_TRACKS_ADD_TO_PLAYLIST':
       return {
         ...state,
         loading: false,
         tracks: [...state.tracks, ...action.payload],
-        tracksSound: [...state.tracksSound, ...action.payload.map( elem => (new Audio(`${elem.preview}`)))]
       }
     case 'FETCH_TRACKS_COUNT':
       return {

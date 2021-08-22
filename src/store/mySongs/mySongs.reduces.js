@@ -29,7 +29,6 @@ function getMyTracks() {
 
 function addToTrackIdList(track) {
   const myTracks = localStorage.getItem('AV--myTracks')
-  const trackIdList  = localStorage.getItem('AV--trackIdList')
 
   const myTracksData = {
     id: track.id,
@@ -54,32 +53,15 @@ function addToTrackIdList(track) {
   }else {
     localStorage.setItem('AV--myTracks', JSON.stringify([myTracksData]))
   }
-
-  if(trackIdList) {
-    const parsedTracksIds = JSON.parse(trackIdList)
-    parsedTracksIds.push(track.id)
-
-    localStorage.setItem('AV--trackIdList', JSON.stringify(parsedTracksIds))
-  }else {
-    localStorage.setItem('AV--trackIdList', JSON.stringify([track.id]))
-  }
 }
 
 function RemoveOfTrackIdList(id) {
   const myTracks = localStorage.getItem('AV--myTracks')
-  const trackIdList  = localStorage.getItem('AV--trackIdList')
 
   if(myTracks) {
     const myParsedTracks = JSON.parse(myTracks)
     const newTracks = myParsedTracks.filter( elem => elem.id != id )
 
     localStorage.setItem('AV--myTracks', JSON.stringify(newTracks))
-  }
-
-  if(trackIdList) {
-    const parsedTracksIds = JSON.parse(trackIdList)
-    const newTracksIds = parsedTracksIds.filter( elem => elem != id )
-
-    localStorage.setItem('AV--trackIdList', JSON.stringify(newTracksIds))
   }
 }

@@ -18,7 +18,6 @@ export default function fetchTracks({url, query, offset = 0, max = 20, newPlayli
       const tracks = await dzApi.get(`${url}?index=${offset}&limit=${max}&q=${query}`)
 
       dispatch(fetchTracksCount(tracks.data.data.length))
-      console.log(tracks.data.data)
 
       newPlaylist && dispatch(fetchTracksNewPlaylist(tracks.data.data))
       !newPlaylist && dispatch(fetchTracksAddToPlaylist(tracks.data.data))

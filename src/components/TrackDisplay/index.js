@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { saveTrack, deleteTrack } from "../../store/mySongs/mySongs.actions";
 import { SiDeezer } from 'react-icons/si'
 import { RiHeartFill, RiHeartAddLine } from 'react-icons/ri'
-import PlayList from "../PlayList/"
+import TrackPlayer from "../TrackPlayer"
 import { CoverContainer, SongContainer, SongInfo, DeezerLink, AddToList, AddToList2, HeartFill, HeartLine} from './styles'
 
 export default function SongDisplay( { data, index }) {
@@ -12,18 +12,13 @@ export default function SongDisplay( { data, index }) {
   const [addToMyList, setAddToMyList] = useState(false);
   const [hideTitle, setHideTitle] = useState('');
 
+  const mySavedSongs = useSelector(state => state.mySongs)
+
   useEffect(() => {
-    const trackList = localStorage.getItem('AV--myTracks')
-
-    if(trackList) {
-      const parsedtrackList = JSON.parse(trackList)
-  
       //se a musica atual estiver na minha lista currentTrackIsInMyList recebe true
-      const currentTrackIsInMyList = parsedtrackList.some( elem => elem.id === data.id )
+      const currentTrackIsInMyList = mySavedSongs.some( elem => elem.id === data.id )
       setAddToMyList(currentTrackIsInMyList)
-    }
-
-  }, [data.id]);
+  }, []);
 
   const dispatch = useDispatch()
 
@@ -77,7 +72,7 @@ export default function SongDisplay( { data, index }) {
               </AddToList2>
 
               <span>
-                <PlayList data={data} fullLayoutDisplay={fullLayoutDisplay} index={index}/>
+                <TrackPlayer data={data} fullLayoutDisplay={fullLayoutDisplay} index={index}/>
               </span>
             </CoverContainer>
           

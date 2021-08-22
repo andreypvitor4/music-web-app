@@ -12,7 +12,7 @@ export function deleteTrack(id) {
   }
 }
 
-export function getSavedTracks() {
+export function getzSavedTracks() {
   return {
     type: 'GET_SAVED_TRACKS'
   }
