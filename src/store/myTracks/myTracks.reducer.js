@@ -4,9 +4,9 @@ const initialState = {
   tracksToDelete: [],
 }
 
-export default function mySongsReducer(state = initialState, action) {
+export default function myTracksReducer(state = initialState, action) {
   switch(action.type) {
-    case 'ADD_TRACK_TO_ADD':
+    case 'ADD_TRACK_TO_ADD_LIST':
       const trackIsAlreadyInMyList = state.myTracks.some(elem => elem.id === action.payload.id)
       return {
         myTracks: state.myTracks,
@@ -14,7 +14,7 @@ export default function mySongsReducer(state = initialState, action) {
         tracksToAdd: trackIsAlreadyInMyList? state.tracksToAdd : [...state.tracksToAdd, action.payload],
       }
 
-    case 'ADD_TRACK_TO_DELETE':
+    case 'ADD_TRACK_TO_DELETE_LIST':
       return {
         myTracks: state.myTracks,
         tracksToAdd: state.tracksToAdd.filter(elem => elem.id !== action.payload.id),

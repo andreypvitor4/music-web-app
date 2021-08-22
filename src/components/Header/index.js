@@ -1,12 +1,14 @@
 import { useRouter } from 'next/dist/client/router';
 import Router from 'next/router';
-import { useEffect, useState } from 'react'
-import { NavComponent, Container, BorderBottom } from "./styles"
-import { getLocalStorageSavedTracks } from '../../store/mySongs/mySongs.actions';
 import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react'
+import { getLocalStorageSavedTracks } from '../../store/myTracks/myTracks.actions';
+import { NavComponent, Container, BorderBottom } from "./styles"
 
 export default function Header() {
   const router = useRouter()
+
+  //posição das barras abaixo dos links home  minhas músicas
   const [borderRight, setBorderRight] = useState(207);
   const [borderWidth, setBorderWidth] = useState(46);
 
@@ -17,7 +19,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if(router.pathname === '/my-songs') {
+    if(router.pathname === '/my-tracks') {
       setBorderRight(80)
       setBorderWidth(115)
     }
@@ -33,10 +35,10 @@ export default function Header() {
     Router.push('/')
   }
 
-  function handleMySongs() {
+  function handleMyTracks() {
     setBorderRight(80)
     setBorderWidth(115)
-    Router.push('/my-songs')
+    Router.push('/my-tracks')
   }
 
   return (
@@ -47,7 +49,7 @@ export default function Header() {
             <li onClick={handleHome}> 
               Home
             </li>
-            <li onClick={handleMySongs}> 
+            <li onClick={handleMyTracks}> 
               Minhas músicas
             </li>
           </ul>

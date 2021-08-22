@@ -3,13 +3,13 @@ import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import ScaleLoader from "react-spinners/ScaleLoader"
 import { IoIosArrowUp } from 'react-icons/io'
-import fetchTracks from "../store/playlist/playlist.thunks";
 import TrackDisplay from "../components/TrackDisplay";
 import Search from "../components/Search";
 import InfiniteScroll from "../components/InfiniteScroll";
-import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
 import { updateTracksAudios } from '../store/tracksAudios/tracksAudios.actions';
-import { addTracksToMyList, deleteTracksOfMyList } from '../store/mySongs/mySongs.actions';
+import { addTracksToMyList, deleteTracksOfMyList } from '../store/myTracks/myTracks.actions';
+import fetchTracks from "../store/playlist/playlist.thunks";
+import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -25,12 +25,16 @@ export default function Home() {
   }, [tracks]);
 
   useEffect(() => {
+    // Atualiza a lista de favoritos com as ações feitas na página
+    dispatch(addTracksToMyList())
+    dispatch(deleteTracksOfMyList())
     return () => {
       dispatch(addTracksToMyList())
       dispatch(deleteTracksOfMyList())
     }
   }, []);
 
+  // Função para fazer a chamada da próxima página da api (o valor padrão do max é 8)
   const fetchMore = useCallback( () => {
     const currentIndex = tracks.length
     dispatch(fetchTracks({

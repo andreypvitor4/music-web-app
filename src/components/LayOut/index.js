@@ -4,7 +4,7 @@ export default function LayOut( { children } ) {
   return (
     <>
       <Header />
-        { children }
+      { children }
     </>
   )
 }

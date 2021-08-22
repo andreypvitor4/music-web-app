@@ -1,13 +1,13 @@
-export function addTrackToAdd(track) {
+export function addTrackToAddList(track) {
   return {
-    type: 'ADD_TRACK_TO_ADD',
+    type: 'ADD_TRACK_TO_ADD_LIST',
     payload: track,
   }
 }
 
-export function addTrackToDelete(track) {
+export function addTrackToDeleteList(track) {
   return {
-    type: 'ADD_TRACK_TO_DELETE',
+    type: 'ADD_TRACK_TO_DELETE_LIST',
     payload: track,
   }
 }

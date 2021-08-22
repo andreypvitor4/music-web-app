@@ -5,20 +5,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TracksList } from "../pagesStyles/home"
 import TrackDisplay from '../components/TrackDisplay'
 import { updateTracksAudios } from "../store/tracksAudios/tracksAudios.actions";
-import { addTracksToMyList, deleteTracksOfMyList } from '../store/mySongs/mySongs.actions';
-import { AddButtonDiv } from "../pagesStyles/mySongs";
+import { addTracksToMyList, deleteTracksOfMyList } from '../store/myTracks/myTracks.actions';
+import { AddButtonDiv } from "../pagesStyles/myTracks";
 
-export default function MySongs() {
+export default function MyTracks() {
   const dispatch = useDispatch()
   
   useEffect(() => {
+    // Atualiza a lista de favoritos com as ações feitas na página
+    dispatch(addTracksToMyList())
+    dispatch(deleteTracksOfMyList())
     return () => {
       dispatch(addTracksToMyList())
       dispatch(deleteTracksOfMyList())
     }
   }, []);
 
-  const { myTracks } = useSelector(state => state.mySongs)
+  const { myTracks } = useSelector(state => state.myTracks)
 
   useEffect(() => {
     dispatch(updateTracksAudios(myTracks))

@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from 'react-redux';
 import { FaPlay } from 'react-icons/fa'
 import { GiPauseButton } from 'react-icons/gi'
 import { AudioPlayer, PlayPause, Time, ProgressBar, DesktopTime} from './styles'
-import { useSelector } from 'react-redux';
 
 export default function PlayList({ songDuration, fullLayoutDisplay, index }) {
+  
+  const tracksAudios = useSelector(state => state.tracksAudios)
 
-  const active = useSelector(state => state.fullSongLayout)
-  const tracksSound = useSelector(state => state.tracksAudios)
-
-  const [isPlaying, setIsPlaying] = useState(active);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [progressBarSeekBeforeWidth, setProgressBarSeekBeforeWidth] = useState(0);
@@ -31,32 +30,33 @@ export default function PlayList({ songDuration, fullLayoutDisplay, index }) {
       })
     }
 
-    tracksSound[index] && tracksSound[index].addEventListener('pause', pauseActiveListener)
+    //tracksAudios é a lista de todos os audios e index é o index da música atual
+    tracksAudios[index] && tracksAudios[index].addEventListener('pause', pauseActiveListener)
 
     return () => {
-      tracksSound[index] && tracksSound[index].removeEventListener('pause', pauseActiveListener)
+      tracksAudios[index] && tracksAudios[index].removeEventListener('pause', pauseActiveListener)
     }
     
-  }, [songDuration, tracksSound[index]]);
+  }, [songDuration, tracksAudios[index]]);
 
   function togglePlayPause() {
     const prevValue = isPlaying
     setIsPlaying(!prevValue)
 
     if(!prevValue) {
-      tracksSound.forEach(elem => elem.pause())
-      tracksSound[index] && tracksSound[index].play()
+      tracksAudios.forEach(elem => elem.pause())
+      tracksAudios[index] && tracksAudios[index].play()
       
       animationRef.current = requestAnimationFrame(whilePlaying)
     }else {
-      tracksSound[index] && tracksSound[index].pause()
+      tracksAudios[index] && tracksAudios[index].pause()
       cancelAnimationFrame(animationRef.current)
     }
   }
 
   function whilePlaying() {
     if(progressBarRef.current) {
-      progressBarRef.current.value = tracksSound[index].currentTime
+      progressBarRef.current.value = tracksAudios[index].currentTime
       setProgressBarSeekBeforeWidth((progressBarRef.current.value/duration)*100)
       setCurrentTime(progressBarRef.current.value)
       animationRef.current = requestAnimationFrame(whilePlaying)
@@ -64,7 +64,7 @@ export default function PlayList({ songDuration, fullLayoutDisplay, index }) {
   }
 
   function handleChangeRange() {
-    if(tracksSound[index]) tracksSound[index].currentTime = progressBarRef.current.value
+    if(tracksAudios[index]) tracksAudios[index].currentTime = progressBarRef.current.value
     setProgressBarSeekBeforeWidth( (progressBarRef.current.value/duration)*100 )
     setCurrentTime(progressBarRef.current.value)
   }

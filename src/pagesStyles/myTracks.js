@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const AddButtonDiv = styled.div`
-  width: 100%;
   display: flex;
   justify-content: flex-end;
+  width: 100%;
   padding-top: 20px;
   padding-right: 30px;
   @media(min-width: 700px) {

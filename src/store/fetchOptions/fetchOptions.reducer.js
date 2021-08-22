@@ -9,13 +9,13 @@ const initialState = {
 
 export default function fetchOptionsReducer(state = initialState, action) {
   switch(action.type) {
-    case 'GET_TREND_TRACKS':
+    case 'GET_TREND_TRACKS_OPTION':
       return {
         ...state,
         url: 'playlist/3155776842/tracks',
         option: 'trend'
       }
-    case 'SEARCH':
+    case 'SEARCH_OPTION':
       return {
         ...state,
         url: 'search/track',

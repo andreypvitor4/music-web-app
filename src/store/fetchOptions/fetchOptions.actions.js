@@ -1,12 +1,12 @@
-export function getTrendTracks() {
+export function getTrendTracksOption() {
   return {
-    type: 'GET_TREND_TRACKS',
+    type: 'GET_TREND_TRACKS_OPTION',
   }
 }
 
-export function search(query) {
+export function searchOption(query) {
   return {
-    type: 'SEARCH',
+    type: 'SEARCH_OPTION',
     payload: query,
   }
 }

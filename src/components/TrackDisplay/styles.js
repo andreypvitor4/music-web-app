@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SongContainer = styled.div`
+export const TrackContainer = styled.div`
   display: flex;
   margin-top: 20px;
   background-image: linear-gradient(to right, rgb(22, 24, 31), #111);
@@ -39,27 +39,41 @@ export const CoverContainer = styled.div`
   h2 {
     padding: 5px;
     padding-left: 10px;
-    transition: 0.1s;
     font-size: 16px;
     margin-top: 20px;
     position: absolute;
     color: white;
-    opacity: 70%;
     background-color: rgba(17, 17, 17, 0.9);
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    transition: 0.1s;
+    opacity: 70%;
   }
+`
+
+export const UnFavoritePopUp = styled.div`
+  position: absolute;
+  padding: 5px 10px;
+  margin-left: 75px;
+  border-radius: 2px;
+  color: #eee;
+  font-weight: bold;
+  background-color: #111;
+  transition: all ease 0.5s;
+  visibility: ${ ({ unFavoriteClicked }) => unFavoriteClicked? 'visible': 'hidden'};
+  opacity: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '70%': '0%'};
+  margin-top: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '-110px': '-145px'};
 `
 
 export const AddToList = styled.div`
   position: absolute;
   right: 0px;
-  margin: -70px 10px 0px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 55px;
   height: 55px;
+  margin: -70px 10px 0px 10px;
   border-radius: 50%;
   padding-top: 12px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -101,10 +115,10 @@ export const HeartLine = styled.div`
   font-size: 40px;
 `
 
-export const SongInfo = styled.div`
+export const TrackInfo = styled.div`
   padding-right: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '5px': '0px'};
   padding-left: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '10px': '0px'};
-  color: white;
+  color: #eee;
 
   @media(max-width: 700px) {
     width: 100%;
@@ -142,18 +156,4 @@ export const DeezerLink = styled.a`
     margin-left: 10px;
     margin-right: 7px;
   }
-`
-
-export const UnFavoritePopUp = styled.div`
-  position: absolute;
-  color: #eee;
-  font-weight: bold;
-  background-color: #111;
-  border-radius: 2px;
-  padding: 5px 10px;
-  margin-left: 75px;
-  transition: all ease 0.5s;
-  visibility: ${ ({ unFavoriteClicked }) => unFavoriteClicked? 'visible': 'hidden'};
-  opacity: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '70%': '0%'};
-  margin-top: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '-110px': '-145px'};
 `

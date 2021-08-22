@@ -2,13 +2,13 @@ import { createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import playlistReducer from './playlist/playlist.reducer'
 import fetchOptionsReducer from './fetchOptions/fetchOptions.reducer'
-import mySongsReducer from './mySongs/mySongs.reduces'
-import tracksAudiosReducer from './tracksAudios/tracksAudios.reduces'
+import myTracksReducer from './myTracks/myTracks.reducer'
+import tracksAudiosReducer from './tracksAudios/tracksAudios.reducer'
 
 const rootReducer = combineReducers({
   playlist: playlistReducer,
   fetchOptions: fetchOptionsReducer,
-  mySongs: mySongsReducer,
+  myTracks: myTracksReducer,
   tracksAudios: tracksAudiosReducer,
 })
 

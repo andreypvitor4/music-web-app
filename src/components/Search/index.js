@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux';
-import { search, getTrendTracks } from '../../store/fetchOptions/fetchOptions.actions';
 import { RiSearch2Line } from 'react-icons/ri'
+import { searchOption, getTrendTracksOption } from '../../store/fetchOptions/fetchOptions.actions';
 import { FormContainer, SearchIcon, SearchInput, Border1, Border2 } from './styles'
 
 export default function Search() {
-  const [input, setInput] = useState('');
-  const [setBorder, setSetBorder] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [changeBorderColor, setChangeBorderColor] = useState(false);
   const inputRef = useRef()
 
   const dispatch = useDispatch()
@@ -14,25 +14,30 @@ export default function Search() {
   function handleSubmit(e) {
     e.preventDefault()
 
-    if(input.length === 0) return dispatch(getTrendTracks())
-    dispatch(search(input))
+    if(searchInput.length === 0) return dispatch(getTrendTracksOption())
+    dispatch(searchOption(searchInput))
+  }
+
+  function handleSearchIconClick() {
+    setChangeBorderColor(true)
+    inputRef.current.focus()
   }
 
   return (
     <div>
-      <FormContainer setBorder={setBorder} onSubmit={handleSubmit}>
+      <FormContainer setBorder={changeBorderColor} onSubmit={handleSubmit}>
         <Border1></Border1>
-        <Border2 setBorder={setBorder}></Border2>
+        <Border2 setBorder={changeBorderColor}></Border2>
         <SearchInput 
           type="text" 
           placeholder="Pesquise por album, artista ou música" 
-          onFocus={() => {setSetBorder(true)}} 
-          onBlur={() => {setSetBorder(false)}} 
+          onFocus={() => {setChangeBorderColor(true)}} 
+          onBlur={() => {setChangeBorderColor(false)}} 
           ref={inputRef}
-          value={input}
-          onChange={e => {setInput(e.target.value)}}
+          value={searchInput}
+          onChange={e => {setSearchInput(e.target.value)}}
         />
-        <SearchIcon setBorder={setBorder} onClick={() => {setSetBorder(true); inputRef.current.focus()}}> <RiSearch2Line /> </SearchIcon>
+        <SearchIcon setBorder={changeBorderColor} onClick={handleSearchIconClick}> <RiSearch2Line /> </SearchIcon>
       </FormContainer>
     </div>
   )

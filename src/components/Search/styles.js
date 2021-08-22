@@ -29,13 +29,13 @@ export const Border1 = styled.span`
 export const Border2 = styled.span`
   align-self: flex-end;
   position: absolute;
-  transition: all ease 0.2s;
-  width: ${ ({ setBorder }) => setBorder? '30%': '0%'};
   height: 1px;
   background-color: ${ ({theme}) => theme.colors.primary };
+  transition: all ease 0.2s;
+  width: ${ ({ setBorder }) => setBorder? '30%': '0%'};
   @media(max-width: 700px) {
-    width: ${ ({ setBorder }) => setBorder? '80%': '0%'};
     height: 2px;
+    width: ${ ({ setBorder }) => setBorder? '80%': '0%'};
   }
 `
 

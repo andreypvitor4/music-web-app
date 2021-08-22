@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const TracksList = styled.div`
-  width: 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  width: 100%;
   flex-wrap: wrap;
   @media(max-width: 700px) {
     width: 100%;
@@ -13,22 +13,22 @@ export const TracksList = styled.div`
 `
 
 export const LoadingScreen = styled.div`
-  width: 100%;
-  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 200px;
 `
 
 export const GoToTop = styled.div`
   display: none;
   @media(max-width: 700px) {
     position: fixed;
+    top: 85vh;
+    right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 85vh;
-    right: 20px;
     height: 60px;
     width: 60px;
     border-radius: 50%;

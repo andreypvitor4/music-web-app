@@ -8,19 +8,20 @@ export const AudioPlayer = styled.div`
 `
 
 export const PlayPause = styled.button`
-  transition: all ease 0.4s;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '40px': '40px'};
-  height: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '30px': '40px'};
   margin-top: 4px;
   border: none;
+  border-radius: 50%;
   background-color: ${ ({theme}) => theme.colors.primary };
   color: #eee;
-  font-size: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '9px': ''};
-  border-radius: 50%;
   cursor: pointer;
+  transition: all ease 0.4s;
+  width: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '40px': '40px'};
+  height: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '30px': '40px'};
+  font-size: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '9px': ''};
+
   @media(max-width: 700px) {
     font-size: 13px;
     width: 40px;
@@ -30,14 +31,16 @@ export const PlayPause = styled.button`
 
 export const Time = styled.div`
   color: white;
-  transition: all ease 0.4s;
   font-weight: bold;
   margin: 5px 8px;
   margin-top: 10px;
   font-family: Arial, Helvetica, sans-serif;
+  transition: all ease 0.4s;
+
   @media(max-width: 700px) {
     font-size: 13px;
   }
+
   @media(min-width: 700px) {
     display: ${ ({ timeDisplay = false }) => timeDisplay? 'none': 'block'};
     font-size: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '10px': '13px'};
