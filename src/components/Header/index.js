@@ -9,14 +9,18 @@ export default function Header() {
   const [borderWidth, setBorderWidth] = useState(46);
 
   useEffect(() => {
-    if(router.pathname) {
+    if(router.pathname === '/my-songs') {
       setBorderRight(80)
       setBorderWidth(115)
     }
-  }, []);
+    if(router.pathname === '/') {
+      setBorderRight(207);
+      setBorderWidth(46)
+    }
+  }, [router.pathname]);
 
   function handleHome() {
-    setBorderRight(207);
+    setBorderRight(207)
     setBorderWidth(46)
   }
 

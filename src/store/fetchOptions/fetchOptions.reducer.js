@@ -1,7 +1,7 @@
 const initialState = {
   url: 'playlist/3155776842/tracks',
   offset: 0,
-  max: 20,
+  max: 5,
   newPlaylist: true,
   query: '',
   option: '',
