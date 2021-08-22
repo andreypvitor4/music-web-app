@@ -4,10 +4,10 @@ import { addTrackToAdd, addTrackToDelete } from "../../store/mySongs/mySongs.act
 import { SiDeezer } from 'react-icons/si'
 import { RiHeartFill, RiHeartAddLine } from 'react-icons/ri'
 import TrackPlayer from "../TrackPlayer"
-import { CoverContainer, SongContainer, SongInfo, DeezerLink, AddToList, AddToList2, HeartFill, HeartLine} from './styles'
+import { CoverContainer, SongContainer, SongInfo, DeezerLink, AddToList, AddToList2, HeartFill, HeartLine, UnFavoritePopUp} from './styles'
 
 export default function TrackDisplay( { data, index }) {
-
+  const [unFavoriteClicked, setUnFavoriteClicked] = useState(false);
   const [fullLayoutDisplay, setFullLayoutDisplay] = useState(false);
   const [addToMyList, setAddToMyList] = useState(false);
   const [hideTitle, setHideTitle] = useState('');
@@ -41,6 +41,8 @@ export default function TrackDisplay( { data, index }) {
       dispatch(addTrackToAdd(data))
     }else {
       dispatch(addTrackToDelete(data))
+      setUnFavoriteClicked(true)
+      setTimeout(() => { setUnFavoriteClicked(false) }, 1000)
     }
 
     const heartFill = e.currentTarget.firstChild
@@ -63,6 +65,8 @@ export default function TrackDisplay( { data, index }) {
               {(!fullLayoutDisplay) && <h2 style={{opacity: hideTitle}}>{ data.title_short }</h2>}
               <img src={data?.album.cover_big || ''} alt="album" onClick={handleLayoutDisplay}/>
 
+              <UnFavoritePopUp unFavoriteClicked={unFavoriteClicked}>Retirado dos favoritos</UnFavoritePopUp>
+
               <AddToList onClick={handleAddToMyList} fullLayoutDisplay={fullLayoutDisplay} >
                 <HeartFill addToMyList={addToMyList}> <RiHeartFill/> </HeartFill>
                 <HeartLine addToMyList={addToMyList}> <RiHeartAddLine/> </HeartLine>
@@ -74,7 +78,7 @@ export default function TrackDisplay( { data, index }) {
               </AddToList2>
 
               <span>
-                <TrackPlayer data={data} fullLayoutDisplay={fullLayoutDisplay} index={index}/>
+                <TrackPlayer fullLayoutDisplay={fullLayoutDisplay} index={index}/>
               </span>
             </CoverContainer>
           

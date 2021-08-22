@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { primaryColor } from "../variables/colors";
 
 export const AddButtonDiv = styled.div`
   width: 100%;
@@ -20,7 +19,7 @@ export const AddButtonDiv = styled.div`
     margin-right: 0px;
     border-radius: 50%;
     border: none;
-    background-color: ${primaryColor};
+    background-color: ${ ({theme}) => theme.colors.primary };
     color: white;
     font-size: 35px;
     user-select: none;

@@ -4,7 +4,7 @@ import { GiPauseButton } from 'react-icons/gi'
 import { AudioPlayer, PlayPause, Time, ProgressBar, DesktopTime} from './styles'
 import { useSelector } from 'react-redux';
 
-export default function PlayList({ songDuration, data, fullLayoutDisplay, index }) {
+export default function PlayList({ songDuration, fullLayoutDisplay, index }) {
 
   const active = useSelector(state => state.fullSongLayout)
   const tracksSound = useSelector(state => state.tracksAudios)

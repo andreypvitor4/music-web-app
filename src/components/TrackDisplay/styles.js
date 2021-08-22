@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { primaryColor } from "../../variables/colors";
 
 export const SongContainer = styled.div`
   display: flex;
@@ -134,7 +133,7 @@ export const DeezerLink = styled.a`
   margin: 10% 5px 20px 0px;
   cursor: pointer;
   text-decoration: none;
-  color: ${primaryColor};
+  color: ${ ({theme}) => theme.colors.primary };
   font-weight: bold;
   :hover {
     color: blue;
@@ -143,4 +142,18 @@ export const DeezerLink = styled.a`
     margin-left: 10px;
     margin-right: 7px;
   }
+`
+
+export const UnFavoritePopUp = styled.div`
+  position: absolute;
+  color: #eee;
+  font-weight: bold;
+  background-color: #111;
+  border-radius: 2px;
+  padding: 5px 10px;
+  margin-left: 75px;
+  transition: all ease 0.5s;
+  visibility: ${ ({ unFavoriteClicked }) => unFavoriteClicked? 'visible': 'hidden'};
+  opacity: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '70%': '0%'};
+  margin-top: ${ ({ unFavoriteClicked }) => unFavoriteClicked? '-110px': '-145px'};
 `

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { primaryColor } from '../../variables/colors'
 
 export const AudioPlayer = styled.div`
   display: flex;
@@ -17,7 +16,7 @@ export const PlayPause = styled.button`
   height: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '30px': '40px'};
   margin-top: 4px;
   border: none;
-  background-color:  ${primaryColor};
+  background-color: ${ ({theme}) => theme.colors.primary };
   color: #eee;
   font-size: ${ ({ fullLayoutDisplay }) => fullLayoutDisplay? '9px': ''};
   border-radius: 50%;
@@ -55,7 +54,6 @@ export const DesktopTime = styled(Time)`
 
 const barBackground = '#555'
 const seekBeforeColor = 'black'
-const knobby = primaryColor
 const selectedKnobby = 'red'
 const barHeight = '8px'
 
@@ -116,7 +114,7 @@ export const ProgressBar = styled.input`
     width: 15px;
     border-radius: 50%;
     border: none;
-    background-color: ${knobby};
+    background-color: ${ ({theme}) => theme.colors.primary };
     cursor: pointer;
     position: relative;
     margin-top: -4px;
@@ -133,7 +131,7 @@ export const ProgressBar = styled.input`
     width: 15px;
     border-radius: 50%;
     border: transparent;
-    background-color: ${knobby};
+    background-color: ${ ({theme}) => theme.colors.primary };
     cursor: pointer;
     position: relative;
     z-index: 3;

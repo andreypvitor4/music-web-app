@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { primaryColor } from '../../variables/colors'
 
 export const FormContainer = styled.form`
   display: flex;
@@ -33,7 +32,7 @@ export const Border2 = styled.span`
   transition: all ease 0.2s;
   width: ${ ({ setBorder }) => setBorder? '30%': '0%'};
   height: 1px;
-  background-color: ${primaryColor};
+  background-color: ${ ({theme}) => theme.colors.primary };
   @media(max-width: 700px) {
     width: ${ ({ setBorder }) => setBorder? '80%': '0%'};
     height: 2px;
@@ -46,7 +45,7 @@ export const SearchIcon = styled.div`
   cursor: pointer;
   outline: none;
   transition: all ease 0.4s;
-  color: ${ ({ setBorder }) => setBorder? `${primaryColor}`: '#eee'};
+  color: ${ ({ setBorder, theme }) => setBorder? theme.colors.primary: '#eee'};
   @media(max-width: 700px) {
     margin-left: ${ ({ setBorder }) => setBorder? `0px`: '75vw'};
   }

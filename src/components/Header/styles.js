@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { primaryColor } from '../../variables/colors'
 
 export const Container = styled.div`
   display: flex;
@@ -38,11 +37,11 @@ export const BorderBottom = styled.div`
   position: absolute;
   top: 62px;
   transition: all ease 0.1s;
-  right: ${ ({ borderRight }) => `${borderRight}px`};
-  width: ${ ({ borderWidth }) => `${borderWidth}px`};
+  right: ${ ({ borderRight }) => `${borderRight}px` };
+  width: ${ ({ borderWidth }) => `${borderWidth}px` };
   height: 2px;
-  background-color: ${primaryColor};
+  background-color: ${ ({theme}) => theme.colors.primary };
   @media(max-width: 700px) {
-    right: ${ ({ borderRight }) => `${borderRight - 57}px`};
+    right: ${ ({ borderRight }) => `${borderRight - 57}px` };
   }
 `
