@@ -1,6 +1,6 @@
 import { useRouter } from 'next/dist/client/router';
 import Router from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'
 import { getLocalStorageSavedTracks, refreshLocalStorageState } from '../../store/myTracks/myTracks.actions';
 import { NavComponent, Container, BorderBottom } from "./styles"
@@ -13,10 +13,10 @@ export default function Header() {
   const [borderWidth, setBorderWidth] = useState(46);
 
   const dispatch = useDispatch()
+  const tracksAudios = useSelector(state => state.tracksAudios)
 
   useEffect(() => {
     dispatch(getLocalStorageSavedTracks())
-    // dispatch(refreshLocalStorageState())
   }, []);
 
   useEffect(() => {
@@ -33,12 +33,14 @@ export default function Header() {
   function handleHome() {
     setBorderRight(207)
     setBorderWidth(46)
+    tracksAudios.forEach(elem => elem.pause())
     Router.push('/')
   }
 
   function handleMyTracks() {
     setBorderRight(80)
     setBorderWidth(115)
+    tracksAudios.forEach(elem => elem.pause())
     Router.push('/my-tracks')
   }
 

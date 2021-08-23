@@ -16,13 +16,6 @@ export default function Home() {
 
   const { tracks, loading, lastPage } = useSelector(state => state.playlist)
   const fetchOptions = useSelector(state => state.fetchOptions)
-  const tracksAudios = useSelector(state => state.tracksAudios)
-
-  useEffect(() => {
-    return () => {
-      tracksAudios.forEach(elem => elem.pause())
-    }
-  }, [tracksAudios]);
 
   useEffect(() => {
     dispatch(fetchTracks(fetchOptions))

@@ -10,14 +10,6 @@ import { AddButtonDiv } from "../pagesStyles/myTracks";
 
 export default function MyTracks() {
   const dispatch = useDispatch()
-
-  const tracksAudios = useSelector(state => state.tracksAudios)
-
-  useEffect(() => {
-    return () => {
-      tracksAudios.forEach(elem => elem.pause())
-    }
-  }, [tracksAudios]);
   
   useEffect(() => {
     return () => {

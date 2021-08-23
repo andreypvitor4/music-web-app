@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RiSearch2Line } from 'react-icons/ri'
 import { searchOption, getTrendTracksOption } from '../../store/fetchOptions/fetchOptions.actions';
 import { FormContainer, SearchIcon, SearchInput, Border1, Border2 } from './styles'
@@ -11,8 +11,12 @@ export default function Search() {
 
   const dispatch = useDispatch()
 
+  const tracksAudios = useSelector(state => state.tracksAudios)
+
   function handleSubmit(e) {
     e.preventDefault()
+
+    tracksAudios.forEach(elem => elem.pause())
 
     if(searchInput.length === 0) return dispatch(getTrendTracksOption())
     dispatch(searchOption(searchInput))
