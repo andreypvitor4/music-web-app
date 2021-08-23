@@ -13,8 +13,16 @@ import { TracksList, LoadingScreen, GoToTop, Title} from '../pagesStyles/home'
 
 export default function Home() {
   const dispatch = useDispatch()
+
   const { tracks, loading, lastPage } = useSelector(state => state.playlist)
   const fetchOptions = useSelector(state => state.fetchOptions)
+  const tracksAudios = useSelector(state => state.tracksAudios)
+
+  useEffect(() => {
+    return () => {
+      tracksAudios.forEach(elem => elem.pause())
+    }
+  }, [tracksAudios]);
 
   useEffect(() => {
     dispatch(fetchTracks(fetchOptions))
@@ -25,8 +33,8 @@ export default function Home() {
   }, [tracks]);
 
   useEffect(() => {
-    // Atualiza a lista de favoritos com as ações feitas na página
     return () => {
+      // Atualiza a lista de favoritos com as ações feitas na página
       dispatch(addTracksToMyList())
       dispatch(deleteTracksOfMyList())
     }
