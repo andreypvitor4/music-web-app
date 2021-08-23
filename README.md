@@ -2,7 +2,8 @@
 
 ## Instruções de uso
 
-- Clone esse repositório. Abra o terminal na pasta do projeto e digite:
+- Clone esse repositório 
+- Abra o terminal na pasta do projeto e digite:
 
 ```bash
 git clone https://github.com/andreypvitor4/music-web-app
