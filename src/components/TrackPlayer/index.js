@@ -17,12 +17,6 @@ export default function PlayList({ songDuration, fullLayoutDisplay, index }) {
   const animationRef = useRef()
 
   useEffect(() => {
-    return () => {
-      tracksAudios[index] && tracksAudios[index].remove()
-    }
-  }, []);
-
-  useEffect(() => {
     const seconds = songDuration || 30
     setDuration(seconds)
 
