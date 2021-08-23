@@ -21,8 +21,10 @@ yarn install
 - No terminal da pasta do projeto digite:
 
 ```bash
+npm run build
 npm run start
 # or
+yarn build
 yarn start
 ```
 - Para visualizar o resultado abra o link [`http://localhost:3000/`](http://localhost:3000/) no seu navegador.
