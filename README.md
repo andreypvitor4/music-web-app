@@ -27,4 +27,4 @@ npm run start
 yarn build
 yarn start
 ```
-- Para visualizar o resultado abra o link [`http://localhost:3000/`](http://localhost:3000/) no seu navegador.
+- Para visualizar o resultado abra [`http://localhost:3000/`](http://localhost:3000/) no seu navegador.
