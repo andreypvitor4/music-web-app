@@ -2,7 +2,7 @@
 
 ## Instruções de uso
 
-- Clone esse repositório. Entre na pasta desejada e digite no terminal:
+- Clone esse repositório. Abra o terminal na pasta do projeto e digite:
 
 ```bash
 git clone https://github.com/andreypvitor4/music-web-app
@@ -12,7 +12,7 @@ git clone https://github.com/andreypvitor4/music-web-app
 - Substitua < Sua RapidApi key > por sua key. 
 - Você pode adquirir uma key nesse [`link`](https://rapidapi.com/deezerdevs/api/deezer-1/)
 
-- Abra o terminal na pasta do projeto e digite:
+- No terminal da pasta do projeto digite:
 
 ```bash
 npm run start
